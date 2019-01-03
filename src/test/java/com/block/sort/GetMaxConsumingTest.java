@@ -8,7 +8,7 @@ import java.util.Random;
  * @author ajie
  *
  */
-public class SnipGetMaxConsumingTestpet {
+public class GetMaxConsumingTest {
 
 	public static void main(String[] args) {
 		int[] arr = new int[10000000];

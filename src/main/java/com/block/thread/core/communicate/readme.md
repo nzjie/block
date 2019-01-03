@@ -1,6 +1,18 @@
 线程间通讯
 可以使用多个线程使用同一个对象，然后一个线程改变对象的属性，另一个线程也能感知，这种方法虽然可以实现通讯，但是有一个弊端，那就是线程需要不停的轮询对象，判断属性是否改变了，如果轮询的时间很短，那么会非常消耗cpu(死循环轮询),如果很长，那么拿到的值不一定是对的（不实时），见demo1
-
+sleep
+sleep不是释放锁，wait释放锁
 使用wait/notify/notifyAll机制
 wait是Object的方法，在调用wait前，线程必须获得对象级锁，在wait后，释放锁，wait后，会重新进入就绪队列，继续竞争对象锁，如果线程在调用wait时，没有找到相应的锁，会抛出异常。
 notify也是需要获得对象锁,如果有多个线程在wait，则线程规划器会随机选取一个线程，在调用notify后，wait线程并不会马上获得锁，需要notify执行完同步块代码并退出同步块后，才能获取，同理，调用notify并不能马上释放锁，执行完同步块代码才回释放，获得对象锁的wait线程在执行完同步块方法后，如果再次调用notify，那么即使现象锁是空闲的，但是其他的wait线程也不会被激活，还会继续阻塞等待，知道一个对象发出notify或notifyAll,总而言之，wait使线程停止运行，而notify使线程继续运行
+wait遇到interrupt，会抛出waitInterruptException,见WaitInterruptDemo
+wait(long)
+等待指定之间，在指定时间内没有被唤醒，则自动唤醒，见WaitTime
+
+PipedInputStream和PipedOutputStream是用于不同的线程间直接通讯的流，一个线程吧数据发送到输出管道，另一个线程从输入管道读取数据，两个线程的管道流需要使用PipeInputStream.connect(PipedOutputStream)或PipedOutputStream.connect(PipeInputStream)进行关联
+见 PipedDemo
+
+join
+如果子线程需要运行的时间很长，而主线程很快就运行完了，但是我主线程需要用到子线程的数据，如果不加以控制，是不可能获得数据的，以为这两个线程时异步进行，这有点像js的异步处理（如ajax）；使用join可以满足前面的需求
+x.join是指所属的线程（x）对象正常执行完run方法，而是当前线程z无限阻塞，瞪等待x销毁后再执行后面的代码，见JoinDemo
+join遇到interrupt也会抛出异常

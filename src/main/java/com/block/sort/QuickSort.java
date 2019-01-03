@@ -18,7 +18,7 @@ import java.util.Random;
 public class QuickSort {
 
 	public static void main(String[] args) {
-		int[] arr = new int[100000000];
+		int[] arr = new int[100000];
 		Random rad = new Random();
 		for (int i = 0; i < arr.length; i++) {
 			arr[i] = rad.nextInt();
