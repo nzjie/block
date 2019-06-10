@@ -35,7 +35,6 @@ public class FileChannel {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			// 马英弄麝香痔疮膏 痔速宁 清热散结片
 		}
 
 	}
